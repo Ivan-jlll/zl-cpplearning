@@ -1,0 +1,160 @@
+ex1-2实验报告-G5124307 郑林
+
+实验目的：探索变量在内存中的布局
+实验代码：
+-----------------------------------------------------------------
+#include<iostream>
+using namespace std;
+
+int x = 4, y, z;
+float p, q, r=3.2;
+char ab, cd = 'r', ef='p';
+double aa, bb=5.66, cc;//定义int,float,char,double类型的全局变量
+int main()
+{
+	int a, b, c = 1;
+	float m=3.2, n, o=55.6;
+	char d, e='e', f;
+	double s, t, i=5.665;
+	cout << "int类型局部变量的地址为:\n";
+	cout << &a << endl;
+	cout << &b << endl;
+	cout << &c << endl;//观察int类型局部变量的地址；
+	cout << "float类型局部变量的地址为:\n";
+	cout << &m << endl;
+	cout << &n << endl;
+	cout << &o << endl;//观察float类型局部变量的地址；
+	cout << "char类型局部变量的地址为:\n";
+	cout << static_cast<void*>(&d) << endl;
+	cout << static_cast<void*>(&e) << endl;
+	cout << static_cast<void*>(&f) << endl;//观察char类型局部变量的地址；
+	cout << "double类型局部变量的地址为:\n";
+	cout << &s << endl;
+	cout << &t << endl;
+	cout << &i << endl;//观察double类型局部变量的地址；
+
+	cout << "int类型全局变量的地址为:\n";
+	cout << &x << endl;
+	cout << &y << endl;
+	cout << &z << endl; //观察int类型全局变量的地址；
+	cout << "float类型全局变量的地址为:\n";
+	cout << &p << endl;
+	cout << &q << endl;
+	cout << &r << endl;//观察float类型全局变量的地址；
+	cout << "char类型全局变量的地址为:\n";
+	cout << static_cast<void*>(&ab) << endl;
+	cout << static_cast<void*>(&cd) << endl;
+	cout << static_cast<void*>(&ef) << endl;//观察char类型全局变量的地址；
+	cout << "double类型全局变量的地址为:\n";
+	cout << &aa << endl;
+	cout << &bb << endl;
+	cout << &cc << endl;//观察double类型全局变量的地址；
+	
+	static int h, j=45, k;
+	static float l = 3.4, p1, q1 = 5.6;
+	static char r1, u = 'u', v;
+	static double w, ss, r3 = 5.9865;
+	cout << "int类型静态局部变量的地址为:\n";
+	cout << &h << endl;
+	cout << &j << endl;
+	cout << &k << endl; //观察int类型静态局部变量的地址；
+	cout << "float类型静态局部变量的地址为:\n";
+	cout << &l << endl;
+	cout << &p1 << endl;
+	cout << &q1 << endl;//观察float类型静态局部变量的地址；
+	cout << "char类型静态局部变量的地址为:\n";
+	cout << static_cast<void*>(&r1) << endl;
+	cout << static_cast<void*>(&u) << endl;
+	cout << static_cast<void*>(&v) << endl;//观察char类型静态局部变量的地址；
+	cout << "double类型静态局部变量的地址为:\n";
+	cout << &w << endl;
+	cout << &ss << endl;
+	cout << &r3 << endl;//观察double类型静态局部变量的地址；
+	return 0;
+}
+------------------------------------------------------------------------
+实验结果：
+int类型局部变量的地址为:
+00000043C0AFF5F4
+00000043C0AFF614
+00000043C0AFF634
+float类型局部变量的地址为:
+00000043C0AFF654
+00000043C0AFF674
+00000043C0AFF694
+char类型局部变量的地址为:
+00000043C0AFF6B4
+00000043C0AFF6D4
+00000043C0AFF6F4
+double类型局部变量的地址为:
+00000043C0AFF718
+00000043C0AFF738
+00000043C0AFF758
+
+int类型全局变量的地址为:
+00007FF696E7F790
+00007FF696E7F794
+00007FF696E7F798
+float类型全局变量的地址为:
+00007FF696E7F79C
+00007FF696E7F7A0
+00007FF696E7F7A4
+char类型全局变量的地址为:
+00007FF696E7F7A8
+00007FF696E7F7A9
+00007FF696E7F7AA
+double类型全局变量的地址为:
+00007FF696E7F7B0
+00007FF696E7F7B8
+00007FF696E7F7C0
+
+int类型静态局部变量的地址为:
+00007FF696E7F7C8
+00007FF696E7F7CC
+00007FF696E7F7D0
+float类型静态局部变量的地址为:
+00007FF696E7F7D4
+00007FF696E7F7D8
+00007FF696E7F7DC
+char类型静态局部变量的地址为:
+00007FF696E7F7E0
+00007FF696E7F7E1
+00007FF696E7F7E2
+double类型静态局部变量的地址为:
+00007FF696E7F7E8
+00007FF696E7F7F0
+00007FF696E7F7F8
+
+规律总结：
+1.无论变量类型，局部变量在内存中的地址间隔32个字节，且每次存储地址随机（下验证）；
+2.全局变量在内存中的地址固定不变（下验证），其中
+int、float类型全局变量在内存中间隔4字节（int、float类型变量的长度）；
+char类型全局变量在内存中间隔1字节（char类型变量的长度）；
+double类型全局变量在内存中间隔8字节（double类型变量的长度）。
+3.静态局部变量在内存中的地址存储方式与全局变量相同。
+
+验证：（以int类型为例）
+int类型局部变量的地址为:
+00000051E7EFF874
+00000051E7EFF894
+00000051E7EFF8B4
+观察可知，与上次存储地址不同。
+int类型全局变量的地址为:
+00007FF696E7F790
+00007FF696E7F794
+00007FF696E7F798
+观察可知，与上次存储地址相同。
+int类型静态局部变量的地址为:
+00007FF696E7F7C8
+00007FF696E7F7CC
+00007FF696E7F7D0
+观察可知，与上次存储地址相同。
+
+故猜想正确。
+
+结论为：1.无论变量类型，局部变量在内存中的地址间隔32个字节，且每次存储地址随机（下验证）；
+2.全局变量在内存中的地址固定不变（下验证），其中
+int、float类型全局变量在内存中间隔4字节（int、float类型变量的长度）；
+char类型全局变量在内存中间隔1字节（char类型变量的长度）；
+double类型全局变量在内存中间隔8字节（double类型变量的长度）。
+3.静态局部变量在内存中的地址存储方式与全局变量相同。
